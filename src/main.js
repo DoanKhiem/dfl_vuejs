@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "./App.vue";
+import BaseVuejs from './views/base_vuejs.vue';
 import router from "./router";
 
 import "./assets/main.css";
@@ -50,7 +50,7 @@ import "./assets/css/responsive.css";
 
 // import "./assets/js/main.js";
 
-const app = createApp(App);
+const app = createApp(BaseVuejs);
 
 app.use(router);
 
