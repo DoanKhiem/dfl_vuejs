@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import BaseVuejs from './views/base_vuejs.vue';
+import App from './App.vue';
 import router from "./router";
 
 import "./assets/main.css";
@@ -18,39 +18,9 @@ import "./assets/css/default.css";
 import "./assets/style.css";
 import "./assets/css/responsive.css";
 
-// import "./assets/js/vendor/jquery-3.2.1.min.js";
-// import "./assets/js/jquery.countdown.min.js";
-// import "./assets/js/jquery.meanmenu.min.js";
-// import "./assets/js/jquery.scrollUp.js";
-// import "./assets/js/jquery.nivo.slider.js";
-// import "./assets/js/jquery.fancybox.min.js";
-// import "./assets/js/jquery.nice-select.min.js";
-// import "./assets/js/jquery-ui.min.js";
-// import "./assets/js/owl.carousel.min.js";
-// import "./assets/js/popper.min.js";
-// import "./assets/js/bootstrap.min.js";
-// import "./assets/js/plugins.js";
-// import "./assets/js/main.js";
-// import "./assets/js/vendor/jquery-3.2.1.min.js";
-// import "./assets/js/jquery.countdown.min.js";
-// import "./assets/js/jquery.meanmenu.min.js";
-// import "./assets/js/jquery.scrollUp.js";
-// import "./assets/js/jquery.nivo.slider.js";
-// import "./assets/js/jquery.fancybox.min.js";
-// import "./assets/js/jquery.nice-select.min.js";
-// import "./assets/js/jquery-ui.min.js";
+import "./assets/js/vendor/modernizr-3.5.0.min.js";
 
-// import "./assets/js/owl.carousel.min.js";
-
-// import "./assets/js/popper.min.js";
-
-// import "./assets/js/bootstrap.min.js";
-
-// import "./assets/js/plugins.js";
-
-// import "./assets/js/main.js";
-
-const app = createApp(BaseVuejs);
+const app = createApp(App);
 
 app.use(router);
 
