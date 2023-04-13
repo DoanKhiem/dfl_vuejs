@@ -42,14 +42,35 @@ export default {
   setup() {
     const n = 1;
     const valueCon = ref("");
+    const name = ref("");
+    const img1 = ref("");
+    const img2 = ref("");
+    const price = ref(null);
+    const prev_price = ref(null);
+    const l_sale = ref(0);
+    const statusFormAdd = ref(true)
     const dataTuThangCon = (data) => {
       valueCon.value = data;
-      console.log(valueCon.value);
+
+      axios
+        .get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products/"+valueCon.value)
+        .then((response) => {
+          name.value = response.data.name;
+          img1.value = response.data.img1;
+          img2.value = response.data.img2;
+          price.value = response.data.price;
+          prev_price.value = response.data.prev_price;
+          l_sale.value = response.data.l_sale;
+          statusFormAdd.value = false;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     };
     const arrProducts = ref([]);
     const callApi = () => {
       axios
-        .get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/users")
+        .get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products")
         .then((response) => {
           console.log(response);
           arrProducts.value = response.data;
@@ -58,8 +79,68 @@ export default {
           console.log(e);
         });
     };
+
+    const onSubmit = () => {
+      if (statusFormAdd.value) { // call api thêm mới
+        axios
+        .post("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products", {
+          name: name.value,
+          img1: img1.value,
+          img2: img2.value,
+          price: price.value,
+          prev_price: prev_price.value,
+          l_sale: l_sale.value,
+        })
+        .then(function (response) {
+          name.value = "";
+          img1.value = "";
+          img2.value = "";
+          price.value = null;
+          prev_price.value = null;
+          l_sale.value = 0;
+          callApi();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      } else { // call api sửa
+        axios
+        .put("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products/"+valueCon.value, {
+          name: name.value,
+          img1: img1.value,
+          img2: img2.value,
+          price: price.value,
+          prev_price: prev_price.value,
+          l_sale: l_sale.value,
+        })
+        .then(function (response) {
+          name.value = "";
+          img1.value = "";
+          img2.value = "";
+          price.value = null;
+          prev_price.value = null;
+          l_sale.value = 0;
+          statusFormAdd.value = true;
+          callApi();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    };
+    const xoaItem = (id) => {
+      axios
+        .delete("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products/"+id)
+        .then(function (response) {
+          callApi();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
     onMounted(() => {
-      axios.get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/users")
+      axios
+        .get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products")
         .then((response) => {
           console.log(response);
           arrProducts.value = response.data;
@@ -74,6 +155,15 @@ export default {
       dataTuThangCon,
       valueCon,
       callApi,
+      onSubmit,
+      name,
+      img1,
+      img2,
+      price,
+      prev_price,
+      l_sale,
+      statusFormAdd,
+      xoaItem,
     };
   },
 };
@@ -725,6 +815,97 @@ export default {
               </div>
               <!-- Toolbar Short Area End -->
             </div>
+            <div class="contact-area ptb-100 ptb-sm-60">
+              <div class="container">
+                <h3 class="mb-20">Thêm mới sản phẩm</h3>
+                <p class="text-capitalize mb-20">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </p>
+                <form id="contact-form" class="contact-form">
+                  <div class="address-wrapper row">
+                    <div class="col-md-12">
+                      {{ name }}
+                      <div class="address-fname">
+                        <input
+                          class="form-control"
+                          type="text"
+                          v-model="name"
+                          name="name"
+                          placeholder="Nhập tên"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="address-email">
+                        <input
+                          class="form-control"
+                          type="text"
+                          v-model="img1"
+                          name="img1"
+                          placeholder="img1"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="address-web">
+                        <input
+                          class="form-control"
+                          type="text"
+                          v-model="img2"
+                          name="img2"
+                          placeholder="img2"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="address-email">
+                        <input
+                          class="form-control"
+                          type="number"
+                          min="0"
+                          v-model="price"
+                          name="price"
+                          placeholder="price"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="address-web">
+                        <input
+                          class="form-control"
+                          type="number"
+                          min="0"
+                          v-model="prev_price"
+                          name="prev_price"
+                          placeholder="prev_price"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="address-subject">
+                        <input
+                          class="form-control"
+                          type="number"
+                          min="0"
+                          v-model="l_sale"
+                          max="100"
+                          name="l_sale"
+                          placeholder="l_sale"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p class="form-message"></p>
+                  <div class="footer-content mail-content clearfix">
+                    <div class="send-email float-md-right">
+                      <div @click="onSubmit" class="return-customer-btn">
+                        {{  statusFormAdd ? 'thêm mới' : 'sửa data' }}
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
             <!-- Grid & List View End -->
             <div class="main-categorie mb-all-40">
               <!-- Grid & List Main Area End -->
@@ -739,7 +920,9 @@ export default {
                       :key="item"
                       :data="item"
                       @dataItem="dataTuThangCon"
-                    ></SingleProduct>
+                      @dataDelete="xoaItem"
+                    >
+                    </SingleProduct>
                   </div>
                   <!-- Row End -->
                 </div>
@@ -1177,5 +1360,4 @@ export default {
 </template>
 
 
-<style>
-</style>
+<style></style>

@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-4 col-md-4 col-sm-6 col-6">
-    <!-- <div class="single-product">
+    <div class="single-product">
       <div class="pro-img">
         <a href="product.html">
           <img
@@ -41,24 +41,24 @@
             <a @click="addToCart()" title="Add to Cart"> + Add To Cart</a>
           </div>
           <div class="actions-secondary">
-            <a href="compare.html" title="Compare"
-              ><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a
+            <a @click="onDetail()" title="Compare"
+              ><i class="lnr lnr-sync"></i> <span>Sửa thông tin</span></a
             >
-            <a href="wishlist.html" title="WishList"
-              ><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a
+            <a @click="onDelete()" title="WishList"
+              ><i class="lnr lnr-heart"></i> <span>Xóa sản phẩm</span></a
             >
           </div>
         </div>
       </div>
-      <span class="sticker-new">new</span>
-    </div> -->
-    <ul>
+      <!-- <span class="sticker-new">new</span> -->
+    </div>
+    <!-- <ul>
       <li>{{ data.name }}</li>
       <li>{{ data.gioi_tinh }}</li>
       <li>{{ data.age }}</li>
       <li>{{ data.address }}</li>
       <li>{{ data.avatar }}</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -69,8 +69,16 @@ export default {
     const addToCart = () => {
       emit('dataItem', props.data.name)
     }
+    const onDetail = () => {
+      emit('dataItem', props.data.id)
+    }
+    const onDelete = () => {
+      emit('dataDelete', props.data.id)
+    }
     return {
-      addToCart
+      addToCart,
+      onDetail,
+      onDelete
     }
   }
 };
