@@ -1,13 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import HomeView from '../components_product/Home.vue'
+import Camera from '../components_product/Camera.vue'
+import Gamepad from '../components_product/Gamepad.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: HomeView
-    // },
+    {
+      path: '/',
+      // name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/camera',
+      // name: 'home',
+      component: Camera
+    },
+    {
+      path: '/gamepad',
+      // name: 'home',
+      component: Gamepad
+    },
     // {
     //   path: '/about',
     //   name: 'about',
