@@ -20,6 +20,7 @@ import Footer from "../components_product/Footer.vue";
 import { ref, onMounted } from "vue";
 import axios, { AxiosHeaders } from "axios";
 import FormData from '../components_product/FormData.vue';
+import filters from '../mixins.js';
 export default {
   components: {
     HeaderArea,
@@ -41,10 +42,11 @@ export default {
     Footer,
     FormData,
   },
+  // mixins: [mixins],
   setup() {
     const n = 1;
     const valueCon = ref("");
-    
+    // const mixinsA = mixins
     // const name = ref("");
     // const img1 = ref("");
     // const img2 = ref("");
@@ -52,7 +54,7 @@ export default {
     // const prev_price = ref(null);
     // const l_sale = ref(0);
     const dataCallProduct = ref({})
-    
+    console.log(filters.formatDate(20240504));
     const dataTuThangCon = (data) => {
       valueCon.value = data;
 
@@ -72,16 +74,7 @@ export default {
         });
     };
     const arrProducts = ref([]);
-    const callApi = () => {
-      axios.get("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products")
-        .then((response) => {
-          console.log(response);
-          arrProducts.value = response.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
+    
 
     
     const xoaItem = (id) => {
@@ -89,7 +82,10 @@ export default {
         .delete("https://6419ba9ef398d7d95d47d12c.mockapi.io/demo/products/" + id)
         .then(function (response) {
           alert("Xóa thành công");
-          callApi();
+          console.log(this);
+          console.log(mixins.methods.callApi());
+          // this.callApi();
+          mixins.methods.callApi()
         })
         .catch(function (error) {
           console.log(error);
@@ -111,7 +107,8 @@ export default {
       dataTuThangCon,
       dataCallProduct,
       valueCon,
-      callApi,
+      // mixinsA,
+      // reuseData,
       // formData,
       // name,
       // img1,
@@ -126,6 +123,8 @@ export default {
 };
 </script>
 <template>
+  <!-- {{mixinsA.methods }} -->
+  {{ $filters.formatDate(20240504) }}
   <!-- Main Wrapper Start Here -->
   <div class="wrapper">
     <Header @dataItem="dataTuThangCon"></Header>
